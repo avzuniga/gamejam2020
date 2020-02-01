@@ -57,7 +57,7 @@ function create ()
     {
         return;
     }
-    this.add.image(400, 300, 'fondo');
+    this.add.image(0, 0, 'fondo');
     checkpoint_final = this.physics.add.staticGroup(); 
     checkpoint_final.create(1000, 600, 'star');
 
@@ -67,7 +67,7 @@ function create ()
 
     platforms = this.physics.add.staticGroup();
 
-    platforms.create(400, 568, 'platform').setScale(2).refreshBody();
+    platforms.create(500, 568, 'platform').setScale(2).refreshBody();
 
     platforms.create(600, 400, 'platform');
     platforms.create(50, 250, 'platform');
@@ -76,7 +76,6 @@ function create ()
     scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
     player = this.physics.add.sprite(100, 450, 'dude');
 
-    player = this.physics.add.sprite(100, 450, 'dude');
 
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
