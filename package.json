@@ -6,6 +6,10 @@
       "node": ">= 12.13.0",
       "npm": ">= 3.0.0"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/avzuniga/gamejam2020.git"
+    },
     "dependencies": {
         "phaser": "3.22.0"
     }
