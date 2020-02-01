@@ -24,7 +24,7 @@ var scoreText;
 var score = 1; //porque el chico comienza con un fragmento
 var gameOver = false;
 var game = new Phaser.Game(config);
-
+var moveCam = false;
 
 function preload ()
 {   
@@ -71,15 +71,29 @@ function create ()
     fondomedio = this.add.image(0 , 0, 'fondo').setScale(1.5, 1.2);
     fondoderecha = this.add.image(1280, 0, 'fondo').setScale(1.5, 1.2);
     scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
+    this.cameras.main.setBounds(0, 0, 720 * 3, 176);
+    for (x = 0; x < 3; x++)
+    {
+        this.add.image(720 * x, 0, 'fondo').setOrigin(0);
+    }
     player = this.physics.add.sprite(100, 450, 'dude');
     player.setScale(2);
+    this.cameras.main.startFollow(player, true);
+    if (this.cameras.main.deadzone)
+    {
+        graphics = this.add.graphics().setScrollFactor(0);
+        graphics.lineStyle(3, 0x00ff00, 1);
+        graphics.strokeRect(200, 200, this.cameras.main.deadzone.width, this.cameras.main.deadzone.height);
+    }
+    text = this.add.text(220, 240).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
     platforms = this.physics.add.staticGroup();
     checkpoint_final = this.physics.add.staticGroup(); 
     personas = this.physics.add.staticGroup();
     personas.create(400,650, 'gamejam-personaje')
     platforms.create(500, 568, 'platform_suelo');
     platforms.create(1000, 568, 'platform_suelo');
-    platforms.create(600, 400, 'platform_desierto_2');
+    platforms.create(1500, 568, 'platform_suelo');
+   // platforms.create(600, 400, 'platform_desierto_2');
     platforms.create(50, 250, 'platform_desierto_1');
     platforms.create(750, 220, 'platform_desierto_1');
     checkpoint_final.create(400, 300, 'star');
@@ -117,6 +131,36 @@ function create ()
 
 function update ()
 {    
+    var cam = this.cameras.main;
+    if (cam.deadzone)
+    {
+        text.setText([
+            'Cam Control: ' + moveCam,
+            'ScrollX: ' + cam.scrollX,
+            'ScrollY: ' + cam.scrollY,
+            'MidX: ' + cam.midPoint.x,
+            'MidY: ' + cam.midPoint.y,
+            'deadzone left: ' + cam.deadzone.left,
+            'deadzone right: ' + cam.deadzone.right,
+            'deadzone top: ' + cam.deadzone.top,
+            'deadzone bottom: ' + cam.deadzone.bottom
+        ]);
+    }
+    else if (cam._tb)
+    {
+        text.setText([
+            'Cam Control: ' + moveCam,
+            'ScrollX: ' + cam.scrollX,
+            'ScrollY: ' + cam.scrollY,
+            'MidX: ' + cam.midPoint.x,
+            'MidY: ' + cam.midPoint.y,
+            'tb x: ' + cam._tb.x,
+            'tb y: ' + cam._tb.y,
+            'tb w: ' + cam._tb.width,
+            'tb h: ' + cam._tb.height,
+            'tb b: ' + cam._tb.bottom
+        ]);
+    }
     player.setVelocity(0);
     if (cursors.left.isDown)
     {
