@@ -5,7 +5,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 9800 },
             debug: false
         }
     },
@@ -71,8 +71,6 @@ function create ()
     fondomedio = this.add.image(0 , 0, 'fondo').setScale(1.5, 1.2);
     fondoderecha = this.add.image(1280, 0, 'fondo').setScale(1.5, 1.2);
     scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
-    player = this.physics.add.sprite(100, 450, 'dude');
-    player.setScale(2);
     platforms = this.physics.add.staticGroup();
     checkpoint_final = this.physics.add.staticGroup(); 
     personas = this.physics.add.staticGroup();
@@ -83,6 +81,8 @@ function create ()
     platforms.create(50, 250, 'platform_desierto_1');
     platforms.create(750, 220, 'platform_desierto_1');
     checkpoint_final.create(400, 300, 'star');
+    player = this.physics.add.sprite(100, 450, 'dude');
+    player.setScale(2);
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     cursors = this.input.keyboard.createCursorKeys();
@@ -122,6 +122,7 @@ function update ()
     {
         player.setVelocityX(-160);
 
+
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
@@ -135,10 +136,9 @@ function update ()
 
         player.anims.play('turn');
     }
-
-    if (cursors.up.isDown && this.player.body.touching.down)
+    if (cursors.up.isDown && player.body.touching.down)
     {
-        player.setVelocityY(-330);
+        player.setVelocityY(-3300);
     }
 
 }
