@@ -25,7 +25,6 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 },
-            SORT_NONE = 0,
             debug: true
         }
     },
@@ -48,7 +47,7 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {   
-    this.load.image('persona', 'assets/gamejam-personaje.png');
+    //this.load.image('persona', 'assets/gamejam-personaje.png');
     this.load.image('fondo', 'assets/fondooriginal.jpg');
     this.load.image('platform_desierto_1', 'assets/Desierto/Plataformas/Plataforma1_1.png');
     this.load.image('platform_desierto_2', 'assets/Desierto/Plataformas/Plataforma1.png');
