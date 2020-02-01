@@ -76,7 +76,7 @@ function create ()
     platforms = this.physics.add.staticGroup();
     checkpoint_final = this.physics.add.staticGroup(); 
     personas = this.physics.add.staticGroup();
-    personas.create(400,650, 'gamejam-personaje')
+    personas.create(900,468, 'persona').setScale(0.5,0.5);
     platforms.create(500, 568, 'platform_suelo');
     platforms.create(1000, 568, 'platform_suelo');
     platforms.create(600, 400, 'platform_desierto_2');
@@ -136,7 +136,7 @@ function update ()
         player.anims.play('turn');
     }
 
-    if (cursors.up.isDown && this.player.body.touching.down)
+    if (cursors.up.isDown && player.body.touching.down)
     {
         player.setVelocityY(-330);
     }
