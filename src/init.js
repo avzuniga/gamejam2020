@@ -66,13 +66,14 @@ function create ()
         delay: 0
     }
     this.music.play(musicConfig);
-    fondoderecha = this.add.image(300, 400, 'fondo').setScale(1.5, 1.2);
+    //fondoderecha = this.add.image(300, 400, 'fondo').setScale(1.5, 1.2);
     fondoatras = this.add.image(-1280, 0, 'fondo').setScale(1.5, 1.2);
     fondomedio = this.add.image(0 , 0, 'fondo').setScale(1.5, 1.2);
     fondoderecha = this.add.image(1280, 0, 'fondo').setScale(1.5, 1.2);
     scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
-    this.cameras.main.setBounds(0, 0, 720 * 3, 176);
-    for (x = 0; x < 3; x++)
+
+    this.cameras.main.setBounds(0, 0, 720 * 7, 176);
+    for (x = 0; x < 10; x++)
     {
         this.add.image(720 * x, 0, 'fondo').setOrigin(0);
     }
@@ -93,14 +94,19 @@ function create ()
     platforms.create(500, 568, 'platform_suelo');
     platforms.create(1000, 568, 'platform_suelo');
     platforms.create(1500, 568, 'platform_suelo');
+    platforms.create(2000, 568, 'platform_suelo');
+    platforms.create(2500, 568, 'platform_suelo');
+    platforms.create(3000, 568, 'platform_suelo');
+    platforms.create(3500, 568, 'platform_suelo');
+    platforms.create(4000, 568, 'platform_suelo');
+    platforms.create(4600, 568, 'platform_suelo');
    // platforms.create(600, 400, 'platform_desierto_2');
     platforms.create(50, 250, 'platform_desierto_1');
     platforms.create(750, 220, 'platform_desierto_1');
     checkpoint_final.create(400, 300, 'star');
     player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
+    player.setCollideWorldBounds(false);
     cursors = this.input.keyboard.createCursorKeys();
-    
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -120,8 +126,6 @@ function create ()
         frameRate: 10,
         repeat: -1
     });
-
-
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(checkpoint_final, platforms);
     this.physics.add.overlap(player, checkpoint_final, FinalEvent, null, this);
@@ -164,13 +168,13 @@ function update ()
     player.setVelocity(0);
     if (cursors.left.isDown)
     {
-        player.setVelocityX(-160);
+        player.setVelocityX(-150);
 
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
     {
-        player.setVelocityX(160);
+        player.setVelocityX(150);
         player.anims.play('right', true);
     }
     else
