@@ -5,7 +5,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 9800 },
             debug: false
         }
     },
@@ -24,7 +24,7 @@ var scoreText;
 var score = 1; //porque el chico comienza con un fragmento
 var gameOver = false;
 var game = new Phaser.Game(config);
-
+var moveCam = false;
 
 function preload ()
 {   
@@ -66,27 +66,47 @@ function create ()
         delay: 0
     }
     this.music.play(musicConfig);
-    fondoderecha = this.add.image(300, 400, 'fondo').setScale(1.5, 1.2);
+    //fondoderecha = this.add.image(300, 400, 'fondo').setScale(1.5, 1.2);
     fondoatras = this.add.image(-1280, 0, 'fondo').setScale(1.5, 1.2);
     fondomedio = this.add.image(0 , 0, 'fondo').setScale(1.5, 1.2);
     fondoderecha = this.add.image(1280, 0, 'fondo').setScale(1.5, 1.2);
     scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
+
+    this.cameras.main.setBounds(0, 0, 720 * 7, 176);
+    for (x = 0; x < 10; x++)
+    {
+        this.add.image(720 * x, 0, 'fondo').setOrigin(0);
+    }
     player = this.physics.add.sprite(100, 450, 'dude');
     player.setScale(2);
+    this.cameras.main.startFollow(player, true);
+    if (this.cameras.main.deadzone)
+    {
+        graphics = this.add.graphics().setScrollFactor(0);
+        graphics.lineStyle(3, 0x00ff00, 1);
+        graphics.strokeRect(200, 200, this.cameras.main.deadzone.width, this.cameras.main.deadzone.height);
+    }
+    text = this.add.text(220, 240).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
     platforms = this.physics.add.staticGroup();
     checkpoint_final = this.physics.add.staticGroup(); 
     personas = this.physics.add.staticGroup();
     personas.create(900,468, 'persona').setScale(0.5,0.5);
     platforms.create(500, 568, 'platform_suelo');
     platforms.create(1000, 568, 'platform_suelo');
-    platforms.create(600, 400, 'platform_desierto_2');
+    platforms.create(1500, 568, 'platform_suelo');
+    platforms.create(2000, 568, 'platform_suelo');
+    platforms.create(2500, 568, 'platform_suelo');
+    platforms.create(3000, 568, 'platform_suelo');
+    platforms.create(3500, 568, 'platform_suelo');
+    platforms.create(4000, 568, 'platform_suelo');
+    platforms.create(4600, 568, 'platform_suelo');
+   // platforms.create(600, 400, 'platform_desierto_2');
     platforms.create(50, 250, 'platform_desierto_1');
     platforms.create(750, 220, 'platform_desierto_1');
     checkpoint_final.create(400, 300, 'star');
     player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
+    player.setCollideWorldBounds(false);
     cursors = this.input.keyboard.createCursorKeys();
-    
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -106,8 +126,6 @@ function create ()
         frameRate: 10,
         repeat: -1
     });
-
-
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(checkpoint_final, platforms);
     this.physics.add.overlap(player, checkpoint_final, FinalEvent, null, this);
@@ -117,16 +135,46 @@ function create ()
 
 function update ()
 {    
+    var cam = this.cameras.main;
+    if (cam.deadzone)
+    {
+        text.setText([
+            'Cam Control: ' + moveCam,
+            'ScrollX: ' + cam.scrollX,
+            'ScrollY: ' + cam.scrollY,
+            'MidX: ' + cam.midPoint.x,
+            'MidY: ' + cam.midPoint.y,
+            'deadzone left: ' + cam.deadzone.left,
+            'deadzone right: ' + cam.deadzone.right,
+            'deadzone top: ' + cam.deadzone.top,
+            'deadzone bottom: ' + cam.deadzone.bottom
+        ]);
+    }
+    else if (cam._tb)
+    {
+        text.setText([
+            'Cam Control: ' + moveCam,
+            'ScrollX: ' + cam.scrollX,
+            'ScrollY: ' + cam.scrollY,
+            'MidX: ' + cam.midPoint.x,
+            'MidY: ' + cam.midPoint.y,
+            'tb x: ' + cam._tb.x,
+            'tb y: ' + cam._tb.y,
+            'tb w: ' + cam._tb.width,
+            'tb h: ' + cam._tb.height,
+            'tb b: ' + cam._tb.bottom
+        ]);
+    }
     player.setVelocity(0);
     if (cursors.left.isDown)
     {
-        player.setVelocityX(-160);
+        player.setVelocityX(-150);
 
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
     {
-        player.setVelocityX(160);
+        player.setVelocityX(150);
         player.anims.play('right', true);
     }
     else
@@ -138,7 +186,7 @@ function update ()
 
     if (cursors.up.isDown && player.body.touching.down)
     {
-        player.setVelocityY(-330);
+        player.setVelocityY(-3300);
     }
 
 }
