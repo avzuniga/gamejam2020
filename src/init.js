@@ -28,7 +28,8 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {   
-
+    this.load.audio("music", ["assets/music/Goodbye.ogg", "assets/music/Goodbye.mp3"]);
+    this.load.audio("ending", ["assets/music/Credits_Diomedes.ogg", "assets/music/Credits_Diomedes.mp3"]);
     //this.load.image('persona', 'assets/gamejam-personaje.png');
 
     this.load.image('persona', 'assets/gamejam-personaje.png');
@@ -51,6 +52,17 @@ function create ()
     {
         return;
     }
+    this.music = this.sound.add("music");
+    var musicConfig = {
+    mute: false,
+    volume: 1,
+    rate: 1,
+    detune: 0,
+    seek: 0,
+    loop: true,
+    delay: 0
+}
+this.music.play(musicConfig);
     fondoderecha = this.add.image(300, 400, 'fondo').setScale(1.5, 1.2);
     fondoatras = this.add.image(-1280 , 0, 'fondo').setScale(1.5, 1.2);
     fondomedio = this.add.image(0 , 0, 'fondo').setScale(1.5, 1.2);
