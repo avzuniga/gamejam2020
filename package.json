@@ -1,0 +1,13 @@
+{
+    "name": "soul-shards",
+    "version": "1.0.0",
+    "description": "GameJame 2020",
+    "engines": {
+      "node": ">= 12.13.0",
+      "npm": ">= 3.0.0"
+    },
+    "dependencies": {
+        "phaser": "3.22.0"
+    }
+   
+  }
