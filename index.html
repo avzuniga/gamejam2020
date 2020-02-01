@@ -2,9 +2,9 @@
 <html lang="en"> 
 <head> 
     <meta charset="UTF-8" />
-    <title>GAMEJAM 2020</title>
-    <h1>Soul Chards</h1>
-    <h2>Angie Zuñiga, Luisa Escobar, Luis Aznar, Felipe Arrieta, Mario Donato</h2>
+<title>GAMEJAM 2020</title>
+<h1>Soul Chards</h1>
+<h2>Angie Zuñiga, Luisa Escobar, Luis Aznar, Felipe Arrieta, Mario Donato</h2>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <style type="text/css">
         body {
@@ -19,8 +19,8 @@
 <script type="text/javascript">
 var config = {
     type: Phaser.AUTO,
-    width: 1280,
-    height: 720,
+    width: 800,
+    height: 600,
     physics: {
         default: 'arcade',
         arcade: {
@@ -47,7 +47,7 @@ var game = new Phaser.Game(config);
 function preload ()
 {   
     this.load.image('persona', 'assets/gamejam-personaje.png');
-    this.load.image('fondo', 'assets/fondooriginal.jpg');
+    this.load.image('fondo', 'assets/spring.jpg');
     this.load.image('platform', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
@@ -57,16 +57,14 @@ function preload ()
 function create ()
 {  
     cursors = this.input.keyboard.createCursorKeys();
-    fondoatras = this.add.image(-1280 , 0, 'fondo').setScale(1.5, 1.2);
-    fondomedio = this.add.image(0 , 0, 'fondo').setScale(1.5, 1.2);
-    fondoderecha = this.add.image(1280, 0, 'fondo').setScale(1.5, 1.2);
+    //fondoatras = this.add.image(-1280 , 0, 'fondo').setScale(1.5, 1.2);
+    //fondomedio = this.add.image(0 , 0, 'fondo').setScale(1.5, 1.2);
+    fondoderecha = this.add.image(300, 400, 'fondo').setScale(1.5, 1.2);
 
     if (gameOver)//si se acaba el juego
     {
         return;
     }
-
-    
 
     checkpoint_final = this.physics.add.staticGroup(); 
     checkpoint_final.create(1000, 600, 'star');
