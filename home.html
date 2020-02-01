@@ -9,6 +9,8 @@
     <style type="text/css">
         body {
             margin: 0;
+            padding: 0;
+            border: 0;
         }
     </style>
 </head>
@@ -45,7 +47,7 @@ var game = new Phaser.Game(config);
 function preload ()
 {   
     this.load.image('persona', 'assets/gamejam-personaje.png');
-    this.load.image('fondo', 'assets/gamejam-fondo.png');
+    this.load.image('fondo', 'assets/fondooriginal.jpg');
     this.load.image('platform', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
@@ -58,13 +60,13 @@ function create ()
     {
         return;
     }
-    this.add.image(0, 0, 'fondo');
+    //fondoatras = this.add.image(-fondomedio.width, 0, 'fondo').setScale(1.5,1.2);
+    fondomedio = this.add.image(0, 0, 'fondo').setScale(1.5,1.2);
+    //fondoderecha = this.add.image(fondomedio.width, 0, 'fondo').setScale(1.5,1.2);
     checkpoint_final = this.physics.add.staticGroup(); 
     checkpoint_final.create(1000, 600, 'star');
 
     personas = this.physics.add.staticGroup();
-    personas.create(400, 568, 'persona').setScale(2).refreshBody();
-    personas.create(600, 400, 'persona');
 
     platforms = this.physics.add.staticGroup();
 
@@ -111,8 +113,8 @@ function create ()
 
 function update ()
 {
-
     
+
     if (cursors.left.isDown)
     {
         player.setVelocityX(-160);
