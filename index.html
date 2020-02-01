@@ -9,6 +9,8 @@
     <style type="text/css">
         body {
             margin: 0;
+            padding: 0;
+            border: 0;
         }
     </style>
 </head>
@@ -58,7 +60,7 @@ function create ()
     {
         return;
     }
-    this.add.image(0, 0, 'fondo');
+    this.add.image(0, 0, 'fondo').setScale(2,2);
     checkpoint_final = this.physics.add.staticGroup(); 
     checkpoint_final.create(1000, 600, 'star');
 
