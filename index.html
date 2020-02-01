@@ -5,7 +5,7 @@
     <title>GAMEJAM 2020</title>
     <h1>Soul Chards</h1>
     <h2>Angie Zuñiga, Luisa Escobar, Luis Aznar, Felipe Arrieta, Mario Donato</h2>
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.22.0/src/phaser.min.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -25,6 +25,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 },
+            SORT_NONE = 0;
             debug: false
         }
     },
@@ -43,6 +44,7 @@ var score = 1; //porque el chico comienza con un fragmento
 var scoreText;
 var gameOver = false;
 var game = new Phaser.Game(config);
+
 
 function preload ()
 {   
