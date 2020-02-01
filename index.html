@@ -48,7 +48,9 @@ function preload ()
 {   
     this.load.image('persona', 'assets/gamejam-personaje.png');
     this.load.image('fondo', 'assets/fondooriginal.jpg');
-    this.load.image('platform', 'assets/platform.png');
+    this.load.image('platform_desierto_1', 'assets/Desierto/Plataformas/Plataforma1_1.png');
+    this.load.image('platform_desierto_2', 'assets/Desierto/Plataformas/Plataforma1.png');
+    this.load.image('platform_suelo', 'assets/Desierto/Suelo.png');
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     
@@ -75,11 +77,12 @@ function create ()
 
     platforms = this.physics.add.staticGroup();
 
-    platforms.create(500, 568, 'platform').setScale(2).refreshBody();
-
-    platforms.create(600, 400, 'platform');
-    platforms.create(50, 250, 'platform');
-    platforms.create(750, 220, 'platform');
+    //platforms.create(500, 568, 'platform_suelo').setScale(2).refreshBody();
+    platforms.create(500, 568, 'platform_suelo');
+    platforms.create(1000, 568, 'platform_suelo');
+    platforms.create(600, 400, 'platform_desierto_2');
+    platforms.create(50, 250, 'platform_desierto_1');
+    platforms.create(750, 220, 'platform_desierto_1');
 
     scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
     player = this.physics.add.sprite(100, 450, 'dude');
