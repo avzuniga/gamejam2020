@@ -35,12 +35,11 @@ var checkpoint_final;
 var platforms;
 var player;
 var cursors;
-var score = 0;
 var scoreText;
-var game = new Phaser.Game(config);
 var score = 1; //porque el chico comienza con un fragmento
 var scoreText;
 var gameOver = false;
+var game = new Phaser.Game(config);
 
 function preload ()
 {   
@@ -74,7 +73,7 @@ function create ()
     platforms.create(50, 250, 'platform');
     platforms.create(750, 220, 'platform');
 
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
     player = this.physics.add.sprite(100, 450, 'dude');
 
     player = this.physics.add.sprite(100, 450, 'dude');
@@ -138,13 +137,12 @@ function update ()
         player.setVelocityY(-330);
     }
 }
-    function evento (player, platforms)
-    //{
-        //star.disableBody(true, true);
-
-        //score += 1;    segun esto se aumenta el score o algo
-        //scoreText.setText(score+ "/4 fragmentos");
-    //}
+    function PersonaEvent (player, persona)
+    {
+        persona.disableBody(true, true); //aqui lo que tiene que ir es que se muestren las conversaciones 
+        score += 1;   
+        scoreText.setText(score+ "/4 fragmentos");
+    }
 
     function FinalEvent (player, checkpoint_final)
     {
@@ -152,10 +150,7 @@ function update ()
             gameover=true
         }
     }
-    function PersonaEvent (player, persona)
-    {
-        //aqui se va a colocar el codigo de lo que sea que pase cuando el personaje se encuentra con una persona
-    }
+
     </script>
 
     </body>
