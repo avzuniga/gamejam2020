@@ -47,7 +47,7 @@ var game = new Phaser.Game(config);
 function preload ()
 {   
     this.load.image('persona', 'assets/gamejam-personaje.png');
-    this.load.image('fondo', 'assets/fondo.jpg');
+    this.load.image('fondo', 'assets/fondooriginal.jpg');
     this.load.image('platform', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
@@ -60,7 +60,7 @@ function create ()
     {
         return;
     }
-    this.add.image(0, 0, 'fondo').setScale(2,2);
+    this.add.image(0, 0, 'fondo').setScale(1.5,1.2);
     checkpoint_final = this.physics.add.staticGroup(); 
     checkpoint_final.create(1000, 600, 'star');
 
