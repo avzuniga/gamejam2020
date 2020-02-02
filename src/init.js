@@ -223,11 +223,7 @@ function update ()
 
     if (cursors.up.isDown && player.body.touching.down)
     {
-<<<<<<< HEAD
-        player.setVelocityY(-9800);
-=======
         player.setVelocityY(-8300);
->>>>>>> angie_rama
     }
 
 }
