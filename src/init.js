@@ -31,6 +31,7 @@ var score = 1; //porque el chico comienza con un fragmento
 var gameOver = false;
 var game = new Phaser.Game(config);
 var moveCam = false;
+var baseURL = 'http://localhost/gamejam2020';
 
 function preload ()
 {   
@@ -211,7 +212,7 @@ function update ()
 
     if (cursors.up.isDown && player.body.touching.down)
     {
-        player.setVelocityY(-3000);
+        player.setVelocityY(-9800);
     }
 
 }
@@ -236,7 +237,7 @@ function update ()
         if(score==3){
            
             convText3.setText("Y así podrás arreglar lo que creías perdido");
-            //TODO: AGREGAR UN FINAL
+            window.location.href = baseURL+'/creditos.html';
 
         }
         
