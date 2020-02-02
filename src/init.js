@@ -75,7 +75,7 @@ function create ()
     {
         this.add.image(1300*x, 0, 'fondo').setOrigin(0);
     }
-    for (x = 5; x < 13; x++)
+    for (x = 4; x < 13; x++)
     {
         // if(x=8){
         //     this.add.image(1300*x, 0, 'montaña').setOrigin(0);
@@ -108,6 +108,8 @@ function create ()
     platforms.create(4000, 568, 'platform_suelo');
     platforms.create(4600, 568, 'platform_suelo');
     platforms.create(5100, 568, 'platform_suelo');
+    platforms.create(5700, 568, 'platform_suelo');
+    platforms.create(6600, 568, 'platform_suelo');
     platforms.create(515, 415, 'platform_desierto_2');
     platforms.create(780, 370, 'platform_desierto_1');
     platforms.create(950, 280, 'platform_desierto_2');
@@ -192,12 +194,12 @@ function update ()
     player.setVelocity(0);
     if (cursors.left.isDown)
     {
-        player.setVelocityX(-150);
+        player.setVelocityX(-550);
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
     {
-        player.setVelocityX(150);
+        player.setVelocityX(550);
         player.anims.play('right', true);
     }
     else
