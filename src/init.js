@@ -103,7 +103,7 @@ function create ()
     corazon = this.physics.add.staticGroup();
     personas.create(2000,454, 'persona').setScale(0.3,0.3);
     personas.create(3500,454, 'persona').setScale(0.3,0.3);
-    corazon.create(115,300,'corazon');
+    corazon.create(140,300,'corazon');
     corazon.create(2010,454,'corazon');
     corazon.create(3510,454,'corazon');
     corText = this.add.text(115, 35, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del primer corazon
@@ -131,7 +131,6 @@ function create ()
     checkpoint_final.create(4800, 454, 'star');
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
-    scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
     convText = this.add.text(2000, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x de la primera persona
     convText2 = this.add.text(3500, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x de la segunda persona
     convText3 = this.add.text(4700, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del checkpoint final
