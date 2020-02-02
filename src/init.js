@@ -16,14 +16,14 @@ var config = {
     }
 };
 var text;
-var convText=' Dialogos';
+var convText='Dialogos';
 var countPersonas=0;
 var personas;
 var checkpoint_final;
 var platforms;
 var player;
 var cursors;
-var scoreText= '1/4 fragmentos';
+var scoreText= '1/3 fragmentos';
 var score = 1; //porque el chico comienza con un fragmento
 var gameOver = false;
 var game = new Phaser.Game(config);
@@ -135,6 +135,7 @@ function update ()
 {   if (gameOver)//si se acaba el juego
     {   
         player.setVelocityX(0);
+        convText="Y así podrás arreglar lo que creías perdido";
         return; //TODO: HAY QUE AGREGAR AQUI QUE SI PIERDE SE PONGA EL MAPA ROJO O ALGO ASI, O REGRESE AL MENU
     }
  
@@ -196,12 +197,15 @@ function update ()
 
     function PersonaEvent (player, persona)
     {   
+        console.log("entra")
         countPersonas+=1;
-        if(countPersonas==1){ //esto hace que si se encuentra con la primera persona le de un consejo 1
-            convText="Consejo 1";
+        if(countPersonas==2){ //esto hace que si se encuentra con la primera persona le de un consejo 1
+            convText="No trates de repararte a través de una relación";
+            console.log(convText)
         }
-        if(countPersonas==2){//esto hace que si se encuentra con la primera persona le de un consejo 2
-            convText="Consejo 2";
+        if(countPersonas==3){//esto hace que si se encuentra con la primera persona le de un consejo 2
+            convText="Recuerda que para compartirte debes conocerte primero";
+            console.log(convText)
         }
         //personas.disableBody(true, true); //aqui lo que tiene que ir es que se muestren las conversaciones 
         score += 1;   
@@ -211,7 +215,6 @@ function update ()
     function FinalEvent (player, checkpoint_final)
     {   
         if(score!=4){ //si no ha recogido cuatro fragmentos y llega al final gameover
-            console.log("entra en el evento final")
             gameOver=true
         }
     }
