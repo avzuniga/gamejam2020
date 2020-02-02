@@ -242,7 +242,16 @@ function update ()
     function  FragmentoEvent(player, corazon){
         corazon.disableBody(true, true); 
         score += 1;   
-        scoreText.setText(score+ "/4 fragmentos");
+        if(score==1){
+            corText.setText(score+ "/4 fragmentos"); 
+        }
+        if(score==2){
+            corText2.setText(score+ "/4 fragmentos"); 
+        }
+        if(score==3){
+            corText3.setText(score+ "/4 fragmentos"); 
+        }
+        
         
     }
 
