@@ -34,7 +34,7 @@ var score = 0; //porque el chico comienza con un fragmento
 var gameOver = false;
 var game = new Phaser.Game(config);
 var moveCam = false;
-var baseURL = 'http://localhost/gamejam2020';
+var baseURL = 'http://127.0.0.1:5500';
 var montañas;
 var arboles;
 function preload ()
