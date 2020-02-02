@@ -230,8 +230,9 @@ function update ()
 
     function FinalEvent (player, checkpoint_final)
     {   
+        checkpoint_final.body.enable = false;
         if(score==3){
-            checkpoint_final.body.enable = false;
+           
             convText3.setText("Y así podrás arreglar lo que creías perdido");
             //TODO: AGREGAR UN FINAL
 
