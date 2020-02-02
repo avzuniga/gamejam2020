@@ -108,7 +108,7 @@ function create ()
     platforms.create(4000, 568, 'platform_suelo');
     platforms.create(4600, 568, 'platform_suelo');
     platforms.create(5100, 568, 'platform_suelo');
-    platforms.create(515, 415, 'platxform_desierto_2');
+    platforms.create(515, 415, 'platform_desierto_2');
     platforms.create(780, 370, 'platform_desierto_1');
     platforms.create(950, 280, 'platform_desierto_2');
     platforms.create(1150, 225, 'platform_desierto_1');
