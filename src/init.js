@@ -18,6 +18,8 @@ var config = {
 
 var text;
 var convText;
+var convText2;
+var convText3;
 var countPersonas=1;
 var personas;
 var checkpoint_final;
@@ -100,7 +102,9 @@ function create ()
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
     scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
-    convText = this.add.text(800, 16, ' Dialogos', { fontSize: '20px', fill: '#000' });
+    convText = this.add.text(500, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x de la primera persona
+    convText2 = this.add.text(1500, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x de la segunda persona
+    convText3 = this.add.text(4000, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del checkpoint final
     text = this.add.text(220, 240).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
     cursors = this.input.keyboard.createCursorKeys();
     this.anims.create({
@@ -132,10 +136,9 @@ function create ()
 
 function update ()
 {   
+   
     if (gameOver)//si se acaba el juego
-    {   mundo=false
-        player.setVelocityX(0);
-        convText.setText("Y así podrás arreglar lo que creías perdido");
+    {   player.setVelocityX(0);
         return; //TODO: HAY QUE AGREGAR AQUI QUE SI PIERDE SE PONGA EL MAPA ROJO O ALGO ASI, O REGRESE AL MENU
     }
  
@@ -205,15 +208,16 @@ function update ()
             convText.setText("No trates de repararte a través de una relación");
         }
         if(countPersonas==3){//esto hace que si se encuentra con la primera persona le de un consejo 2
-            convText.setText("Recuerda que para compartirte debes conocerte primero");
+            convText2.setText("Recuerda que para compartirte debes conocerte primero");
         }
-        console.log(score)
     }
 
     function FinalEvent (player, checkpoint_final)
     {   
-        checkpoint_final.disableBody(true,true);
-        if(score!=4){ //si no ha recogido cuatro fragmentos y llega al final gameover
+        checkpoint_final.body.enable = false;
+        convText3.setText("Y así podrás arreglar lo que creías perdido");
+        if(score!=3){ //si no ha recogido cuatro fragmentos y llega al final gameover
+            convText3.setText("Te falta un fragmento");
             gameOver=true
         }
     }
