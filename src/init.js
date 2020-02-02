@@ -31,7 +31,8 @@ var moveCam = false;
 
 function preload ()
 {   
-
+    var timer = 0;
+    var loadingJump = false;
     //this.load.image('persona', 'assets/gamejam-personaje.png');
     this.load.audio("music",["assets/music/Goodbye.ogg", "assets/music/Goodbye.mp3"]);
     this.load.audio("ending",["assets/music/Credits_Diomedes.ogg", "assets/music/Credits_Diomedes.mp3"]);
@@ -44,8 +45,11 @@ function preload ()
     this.load.image('platform_desierto_1', 'assets/Desierto/Plataformas/Plataforma1_1.png');
     this.load.image('platform_desierto_2', 'assets/Desierto/Plataformas/Plataforma1.png');
     this.load.image('platform_suelo', 'assets/Desierto/Suelo.png');
+    this.load.image('platform_suelo_2', 'assets/Desierto/Suelo.png');
+    this.load.image('montaña', 'assets/Bosque/Montaña.png');
+
     this.load.image('star', 'assets/star.png');
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.spritesheet('dude', 'assets/prota.png', { frameWidth: 28, frameHeight: 48 });
     
 }
 
@@ -64,11 +68,21 @@ function create ()
     this.music.play(musicConfig);
     fondo = this.add.image(1300, 1400, 'fondo').setScale(1.5, 1.2);
     this.cameras.main.setBounds(0, 0, 720 * 7, 176);
-    for (x = 0; x < 10; x++)
+    for (x = 0; x < 4; x++)
     {
         this.add.image(1300*x, 0, 'fondo').setOrigin(0);
         this.add.text(1300*x, 16, scoreText, { fontSize: '25px', fill: '#000' });
         this.add.text(1300*x, 45, convText , { fontSize: '25px', fill: '#000' });
+    }
+    for (x = 5; x < 10; x++)
+    {
+        // if(x=8){
+        //     this.add.image(1300*x, 0, 'montaña').setOrigin(0);
+        // }else{
+        this.add.image(1300*x, 0, 'fondo').setOrigin(0);
+        this.add.text(1300*x, 16, scoreText, { fontSize: '25px', fill: '#000' });
+        this.add.text(1300*x, 45, convText , { fontSize: '25px', fill: '#000' });
+        // }
     }
     player = this.physics.add.sprite(100, 300, 'dude');
     player.setScale(2);
@@ -83,8 +97,8 @@ function create ()
     platforms = this.physics.add.staticGroup();
     checkpoint_final = this.physics.add.staticGroup(); 
     personas = this.physics.add.staticGroup();
-    personas.create(500,432, 'persona').setScale(0.5,0.5);
-    personas.create(1500,432, 'persona').setScale(0.5,0.5);
+    personas.create(2000,454, 'persona').setScale(0.3,0.3);
+    personas.create(3500,454, 'persona').setScale(0.3,0.3);
     platforms.create(500, 568, 'platform_suelo');
     platforms.create(1000, 568, 'platform_suelo');
     platforms.create(1500, 568, 'platform_suelo');
@@ -94,10 +108,14 @@ function create ()
     platforms.create(3500, 568, 'platform_suelo');
     platforms.create(4000, 568, 'platform_suelo');
     platforms.create(4600, 568, 'platform_suelo');
-    //platforms.create(600, 400, 'platform_desierto_2');
-    platforms.create(50, 250, 'platform_desierto_1');
-    platforms.create(750, 220, 'platform_desierto_1');
-    checkpoint_final.create(4200, 430, 'star');
+    platforms.create(515, 415, 'platform_desierto_2');
+    platforms.create(780, 370, 'platform_desierto_1');
+    platforms.create(950, 280, 'platform_desierto_2');
+    platforms.create(1150, 225, 'platform_desierto_1');
+    platforms.create(1400, 355, 'platform_desierto_2');
+    platforms.create(2580, 240, 'platform_desierto_2');
+    platforms.create(3000, 160, 'platform_desierto_1');
+    //checkpoint_final.create(4200, 430, 'star');
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
     //scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
@@ -137,7 +155,7 @@ function update ()
         player.setVelocityX(0);
         return; //TODO: HAY QUE AGREGAR AQUI QUE SI PIERDE SE PONGA EL MAPA ROJO O ALGO ASI, O REGRESE AL MENU
     }
- 
+    
     var cam = this.cameras.main;
     if (cam.deadzone)
     {
@@ -172,7 +190,6 @@ function update ()
     if (cursors.left.isDown)
     {
         player.setVelocityX(-150);
-
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
@@ -189,13 +206,14 @@ function update ()
 
     if (cursors.up.isDown && player.body.touching.down)
     {
-        player.setVelocityY(-3300);
+        player.setVelocityY(-3000);
     }
 
 }
 
     function PersonaEvent (player, persona)
     {   
+        this.cameras.main.setZoom(1);
         countPersonas+=1;
         if(countPersonas==1){ //esto hace que si se encuentra con la primera persona le de un consejo 1
             convText="Consejo 1";
