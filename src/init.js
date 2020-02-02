@@ -30,7 +30,7 @@ var platforms;
 var player;
 var cursors;
 var scoreText;
-var score = 1; //porque el chico comienza con un fragmento
+var score = 0; //porque el chico comienza con un fragmento
 var gameOver = false;
 var game = new Phaser.Game(config);
 var moveCam = false;
@@ -106,9 +106,9 @@ function create ()
     corazon.create(115,300,'corazon');
     corazon.create(2010,454,'corazon');
     corazon.create(3510,454,'corazon');
-    corText = this.add.text(115, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del primer corazon
-    corText2 = this.add.text(2010, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del segundo corazon
-    corText3 = this.add.text(3510, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del tercer corazon
+    corText = this.add.text(115, 35, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del primer corazon
+    corText2 = this.add.text(2010, 35, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del segundo corazon
+    corText3 = this.add.text(3510, 35, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del tercer corazon
     platforms.create(500, 568, 'platform_suelo');
     platforms.create(1000, 568, 'platform_suelo');
     platforms.create(1500, 568, 'platform_suelo');
@@ -223,7 +223,7 @@ function update ()
 
     if (cursors.up.isDown && player.body.touching.down)
     {
-        player.setVelocityY(-3000);
+        player.setVelocityY(-8300);
     }
 
 }
@@ -243,13 +243,13 @@ function update ()
         corazon.disableBody(true, true); 
         score += 1;   
         if(score==1){
-            corText.setText(score+ "/4 fragmentos"); 
+            corText.setText(score+ "/3 fragmentos"); 
         }
         if(score==2){
-            corText2.setText(score+ "/4 fragmentos"); 
+            corText2.setText(score+ "/3 fragmentos"); 
         }
         if(score==3){
-            corText3.setText(score+ "/4 fragmentos"); 
+            corText3.setText(score+ "/3 fragmentos"); 
         }
         
         
