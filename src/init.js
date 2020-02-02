@@ -17,6 +17,9 @@ var config = {
 };
 
 var text;
+var corText;
+var corText2;
+var corText3;
 var convText;
 var convText2;
 var convText3;
@@ -27,7 +30,7 @@ var platforms;
 var player;
 var cursors;
 var scoreText;
-var score = 1; //porque el chico comienza con un fragmento
+var score = 0; //porque el chico comienza con un fragmento
 var gameOver = false;
 var game = new Phaser.Game(config);
 var moveCam = false;
@@ -51,6 +54,7 @@ function preload ()
     this.load.image('platform_suelo', 'assets/Desierto/Suelo.png');
     this.load.image('platform_suelo_2', 'assets/Desierto/Suelo.png');
     this.load.image('montaña', 'assets/Bosque/Montaña.png');
+    this.load.image('corazon', 'assets/fragmento.png');
 
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('dude', 'assets/prota.png', { frameWidth: 28, frameHeight: 48 });
@@ -97,8 +101,15 @@ function create ()
     platforms = this.physics.add.staticGroup();
     checkpoint_final = this.physics.add.staticGroup(); 
     personas = this.physics.add.staticGroup();
+    corazon = this.physics.add.staticGroup();
     personas.create(2000,454, 'persona').setScale(0.3,0.3);
     personas.create(3500,454, 'persona').setScale(0.3,0.3);
+    corazon.create(160,450,'corazon');
+    corazon.create(2010,454,'corazon');
+    corazon.create(3510,454,'corazon');
+    corText = this.add.text(115, 45, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del primer corazon
+    corText2 = this.add.text(2010, 45, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del segundo corazon
+    corText3 = this.add.text(3510, 45, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del tercer corazon
     platforms.create(500, 568, 'platform_suelo');
     platforms.create(1000, 568, 'platform_suelo');
     platforms.create(1500, 568, 'platform_suelo');
@@ -121,7 +132,6 @@ function create ()
     checkpoint_final.create(4800, 454, 'star');
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
-    scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
     convText = this.add.text(2000, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x de la primera persona
     convText2 = this.add.text(3500, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x de la segunda persona
     convText3 = this.add.text(4700, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del checkpoint final
@@ -149,6 +159,7 @@ function create ()
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(personas, platforms);
     this.physics.add.collider(checkpoint_final, platforms);
+    this.physics.add.overlap(player, corazon, FragmentoEvent, null, this);
     this.physics.add.overlap(player, checkpoint_final, FinalEvent, null, this);
     this.physics.add.overlap(player, personas, PersonaEvent, null, this);
     //this.physics.add.overlap(player, personaje2, evento, null, this); con esto se da lugar a un evento dado el personaje colisione con el personaje 2
@@ -212,7 +223,11 @@ function update ()
 
     if (cursors.up.isDown && player.body.touching.down)
     {
+<<<<<<< HEAD
         player.setVelocityY(-9800);
+=======
+        player.setVelocityY(-8300);
+>>>>>>> angie_rama
     }
 
 }
@@ -221,14 +236,27 @@ function update ()
     {   
         persona.body.enable = false;
         countPersonas+=1;
-        score += 1;   
-        scoreText.setText(score+ "/4 fragmentos");
         if(countPersonas==2){ //esto hace que si se encuentra con la primera persona le de un consejo 1
             convText.setText("No trates de repararte a través de una relación");
         }
         if(countPersonas==3){//esto hace que si se encuentra con la primera persona le de un consejo 2
             convText2.setText("Recuerda que para compartirte debes conocerte primero");
         }
+    }
+    function  FragmentoEvent(player, corazon){
+        corazon.disableBody(true, true); 
+        score += 1;   
+        if(score==1){
+            corText.setText("Haz recogido tu primer fragmento, sigue descubriendote "+score+ "/3 fragmentos"); 
+        }
+        if(score==2){
+            corText2.setText(score+ "/3 fragmentos"); 
+        }
+        if(score==3){
+            corText3.setText(score+ "/3 fragmentos"); 
+        }
+        
+        
     }
 
     function FinalEvent (player, checkpoint_final)
