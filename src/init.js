@@ -5,7 +5,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 9800 },
+            gravity: { y: 450 },
             debug: true
         }
     },
@@ -169,8 +169,9 @@ function update ()
 {   
    
     if (gameOver)//si se acaba el juego
-    {   player.setVelocityX(0);
-        return; //TODO: HAY QUE AGREGAR AQUI QUE SI PIERDE SE PONGA EL MAPA ROJO O ALGO ASI, O REGRESE AL MENU
+    {   
+        player.setVelocityX(0);
+        //return;
     }
     
     var cam = this.cameras.main;
@@ -203,7 +204,7 @@ function update ()
             'tb b: ' + cam._tb.bottom
         ]);
     }
-    player.setVelocity(0);
+ ///   player.setVelocity(0);
     if (cursors.left.isDown)
     {
         player.setVelocityX(-550);
@@ -223,7 +224,8 @@ function update ()
 
     if (cursors.up.isDown && player.body.touching.down)
     {
-        player.setVelocityY(-8300);
+        player.setVelocityY(-380);
+
     }
 
 }
@@ -259,7 +261,7 @@ function update ()
     {   
         checkpoint_final.body.enable = false;
         if(score==3){
-           
+            gameOver=true;
             convText3.setText("Y así podrás arreglar lo que creías perdido");
             window.location.href = baseURL+'/creditos.html';
 
@@ -267,6 +269,5 @@ function update ()
         
         if(score!=3){ //si no ha recogido cuatro fragmentos y llega al final gameover
             convText3.setText("Te falta un fragmento");
-            gameOver=true
         }
     }
