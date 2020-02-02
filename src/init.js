@@ -17,6 +17,9 @@ var config = {
 };
 
 var text;
+var corText;
+var corText2;
+var corText3;
 var convText;
 var convText2;
 var convText3;
@@ -50,6 +53,7 @@ function preload ()
     this.load.image('platform_suelo', 'assets/Desierto/Suelo.png');
     this.load.image('platform_suelo_2', 'assets/Desierto/Suelo.png');
     this.load.image('montaña', 'assets/Bosque/Montaña.png');
+    this.load.image('corazon', 'assets/fragmento.png');
 
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('dude', 'assets/prota.png', { frameWidth: 28, frameHeight: 48 });
@@ -96,8 +100,15 @@ function create ()
     platforms = this.physics.add.staticGroup();
     checkpoint_final = this.physics.add.staticGroup(); 
     personas = this.physics.add.staticGroup();
+    corazon = this.physics.add.staticGroup();
     personas.create(2000,454, 'persona').setScale(0.3,0.3);
     personas.create(3500,454, 'persona').setScale(0.3,0.3);
+    corazon.create(115,300,'corazon');
+    corazon.create(2010,454,'corazon');
+    corazon.create(3510,454,'corazon');
+    corText = this.add.text(115, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del primer corazon
+    corText2 = this.add.text(2010, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del segundo corazon
+    corText3 = this.add.text(3510, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del tercer corazon
     platforms.create(500, 568, 'platform_suelo');
     platforms.create(1000, 568, 'platform_suelo');
     platforms.create(1500, 568, 'platform_suelo');
@@ -148,6 +159,7 @@ function create ()
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(personas, platforms);
     this.physics.add.collider(checkpoint_final, platforms);
+    this.physics.add.overlap(player, corazon, FragmentoEvent, null, this);
     this.physics.add.overlap(player, checkpoint_final, FinalEvent, null, this);
     this.physics.add.overlap(player, personas, PersonaEvent, null, this);
     //this.physics.add.overlap(player, personaje2, evento, null, this); con esto se da lugar a un evento dado el personaje colisione con el personaje 2
@@ -220,14 +232,18 @@ function update ()
     {   
         persona.body.enable = false;
         countPersonas+=1;
-        score += 1;   
-        scoreText.setText(score+ "/4 fragmentos");
         if(countPersonas==2){ //esto hace que si se encuentra con la primera persona le de un consejo 1
             convText.setText("No trates de repararte a través de una relación");
         }
         if(countPersonas==3){//esto hace que si se encuentra con la primera persona le de un consejo 2
             convText2.setText("Recuerda que para compartirte debes conocerte primero");
         }
+    }
+    function  FragmentoEvent(player, corazon){
+        corazon.disableBody(true, true); 
+        score += 1;   
+        scoreText.setText(score+ "/4 fragmentos");
+        
     }
 
     function FinalEvent (player, checkpoint_final)
