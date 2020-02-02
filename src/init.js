@@ -15,8 +15,11 @@ var config = {
         update: update
     }
 };
-
+var todo_bien=false;
 var text;
+var alert;
+var alert2;
+var alert3;
 var corText;
 var corText2;
 var corText3;
@@ -175,6 +178,9 @@ function create ()
     convText = this.add.text(250, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x de la primera persona
     convText2 = this.add.text(3080, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x de la segunda persona
     convText3 = this.add.text(6940, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del checkpoint final
+    alert = this.add.text(250, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x de la primera persona
+    alert2 = this.add.text(3080, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x de la segunda persona
+    alert3 = this.add.text(6940, 16, '', { fontSize: '20px', fill: '#000' });//se ubica en el x del checkpoint final
     cursors = this.input.keyboard.createCursorKeys();
     this.anims.create({
         key: 'left',
@@ -271,13 +277,24 @@ function update ()
 
     function PersonaEvent (player, persona)
     {   
-        persona.body.enable = false;
+        if(todo_bien){
         countPersonas+=1;
-        if(countPersonas==1){ //esto hace que si se encuentra con la primera persona le de un consejo 1
-            convText2.setText("No trates de repararte a través de una relación");
         }
-        if(countPersonas==2){//esto hace que si se encuentra con la primera persona le de un consejo 2
+        if(score==0 && countPersonas==0){ //si se encuentra con la primera persona pero no tiene el primer fragmento
+            alert2.setText("Te faltan fragmentos");
+        }
+        if(countPersonas==1 && score == 1){ //esto hace que si se encuentra con la primera persona le de un consejo 1
+            convText2.setText("No trates de repararte a través de una relación");
+            persona.body.enable = false;
+            todo_bien=false;
+        }
+        if(score==1 && countPersonas==2){ //si se encuentra con la primera persona pero no tiene el primer fragmento
+            alert3.setText("Te faltan fragmentos");
+        }
+        if(countPersonas==2 && score == 2){ //esto hace que si se encuentra con la primera persona le de un consejo 1
             convText3.setText("Recuerda que para compartirte debes conocerte primero");
+            persona.body.enable = false;
+            todo_bien=false;
         }
     }
     function  FragmentoEvent(player, corazon){
@@ -285,9 +302,11 @@ function update ()
         score += 1;   
         if(score==1){
             corText.setText("Haz recogido tu primer fragmento, sigue descubriendote "+score+ "/3 fragmentos"); 
+            todo_bien=true;
         }
         if(score==2){
             corText2.setText(score+ "/3 fragmentos"); 
+            todo_bien=true;
         }
         if(score==3){
             corText3.setText(score+ "/3 fragmentos"); 
@@ -310,3 +329,4 @@ function update ()
             convText3.setText("Te falta un fragmento");
         }
     }
+t
