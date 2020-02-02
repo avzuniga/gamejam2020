@@ -15,15 +15,16 @@ var config = {
         update: update
     }
 };
+
 var text;
-var convText='Dialogos';
-var countPersonas=0;
+var convText;
+var countPersonas=1;
 var personas;
 var checkpoint_final;
 var platforms;
 var player;
 var cursors;
-var scoreText= '1/3 fragmentos';
+var scoreText;
 var score = 1; //porque el chico comienza con un fragmento
 var gameOver = false;
 var game = new Phaser.Game(config);
@@ -67,8 +68,6 @@ function create ()
     for (x = 0; x < 10; x++)
     {
         this.add.image(1300*x, 0, 'fondo').setOrigin(0);
-        this.add.text(1300*x, 16, scoreText, { fontSize: '25px', fill: '#000' });
-        this.add.text(1300*x, 45, convText , { fontSize: '25px', fill: '#000' });
     }
     player = this.physics.add.sprite(100, 300, 'dude');
     player.setScale(2);
@@ -100,8 +99,8 @@ function create ()
     checkpoint_final.create(4200, 430, 'star');
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
-    //scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
-    //convText = this.add.text(800, 16, ' Dialogos', { fontSize: '20px', fill: '#000' });
+    scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
+    convText = this.add.text(800, 16, ' Dialogos', { fontSize: '20px', fill: '#000' });
     text = this.add.text(220, 240).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
     cursors = this.input.keyboard.createCursorKeys();
     this.anims.create({
@@ -132,10 +131,11 @@ function create ()
 }
 
 function update ()
-{   if (gameOver)//si se acaba el juego
-    {   
+{   
+    if (gameOver)//si se acaba el juego
+    {   mundo=false
         player.setVelocityX(0);
-        convText="Y así podrás arreglar lo que creías perdido";
+        convText.setText("Y así podrás arreglar lo que creías perdido");
         return; //TODO: HAY QUE AGREGAR AQUI QUE SI PIERDE SE PONGA EL MAPA ROJO O ALGO ASI, O REGRESE AL MENU
     }
  
@@ -197,23 +197,22 @@ function update ()
 
     function PersonaEvent (player, persona)
     {   
-        console.log("entra")
+        persona.body.enable = false;
         countPersonas+=1;
+        score += 1;   
+        scoreText.setText(score+ "/4 fragmentos");
         if(countPersonas==2){ //esto hace que si se encuentra con la primera persona le de un consejo 1
-            convText="No trates de repararte a través de una relación";
-            console.log(convText)
+            convText.setText("No trates de repararte a través de una relación");
         }
         if(countPersonas==3){//esto hace que si se encuentra con la primera persona le de un consejo 2
-            convText="Recuerda que para compartirte debes conocerte primero";
-            console.log(convText)
+            convText.setText("Recuerda que para compartirte debes conocerte primero");
         }
-        //personas.disableBody(true, true); //aqui lo que tiene que ir es que se muestren las conversaciones 
-        score += 1;   
-        scoreText=score+ "/4 fragmentos";
+        console.log(score)
     }
 
     function FinalEvent (player, checkpoint_final)
     {   
+        checkpoint_final.disableBody(true,true);
         if(score!=4){ //si no ha recogido cuatro fragmentos y llega al final gameover
             gameOver=true
         }
