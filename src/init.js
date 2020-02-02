@@ -6,7 +6,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 9800 },
-            debug: false
+            debug: true
         }
     },
     scene: {
@@ -15,12 +15,15 @@ var config = {
         update: update
     }
 };
+var text;
+var convText=' Dialogos';
+var countPersonas=0;
 var personas;
 var checkpoint_final;
 var platforms;
 var player;
 var cursors;
-var scoreText;
+var scoreText= '1/4 fragmentos';
 var score = 1; //porque el chico comienza con un fragmento
 var gameOver = false;
 var game = new Phaser.Game(config);
@@ -35,8 +38,6 @@ function preload ()
 
 
     this.load.image('persona', 'assets/gamejam-personaje.png');
-
-    this.load.image('fondo', 'assets/spring.jpg');
     this.load.image('platform', 'assets/platform.png');
 
     this.load.image('fondo', 'assets/fondooriginal.jpg');
@@ -50,11 +51,6 @@ function preload ()
 
 function create ()
 {  
-    if (gameOver)//si se acaba el juego
-    {
-        return;
-    }
-
     this.music = this.sound.add("music");
     var musicConfig = {
         mute: false,
@@ -66,18 +62,15 @@ function create ()
         delay: 0
     }
     this.music.play(musicConfig);
-    //fondoderecha = this.add.image(300, 400, 'fondo').setScale(1.5, 1.2);
-    fondoatras = this.add.image(-1280, 0, 'fondo').setScale(1.5, 1.2);
-    fondomedio = this.add.image(0 , 0, 'fondo').setScale(1.5, 1.2);
-    fondoderecha = this.add.image(1280, 0, 'fondo').setScale(1.5, 1.2);
-    scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
-
+    fondo = this.add.image(1300, 1400, 'fondo').setScale(1.5, 1.2);
     this.cameras.main.setBounds(0, 0, 720 * 7, 176);
     for (x = 0; x < 10; x++)
     {
-        this.add.image(720 * x, 0, 'fondo').setOrigin(0);
+        this.add.image(1300*x, 0, 'fondo').setOrigin(0);
+        this.add.text(1300*x, 16, scoreText, { fontSize: '25px', fill: '#000' });
+        this.add.text(1300*x, 45, convText , { fontSize: '25px', fill: '#000' });
     }
-    player = this.physics.add.sprite(100, 450, 'dude');
+    player = this.physics.add.sprite(100, 300, 'dude');
     player.setScale(2);
     this.cameras.main.startFollow(player, true);
     if (this.cameras.main.deadzone)
@@ -90,7 +83,8 @@ function create ()
     platforms = this.physics.add.staticGroup();
     checkpoint_final = this.physics.add.staticGroup(); 
     personas = this.physics.add.staticGroup();
-    personas.create(900,468, 'persona').setScale(0.5,0.5);
+    personas.create(500,432, 'persona').setScale(0.5,0.5);
+    personas.create(1500,432, 'persona').setScale(0.5,0.5);
     platforms.create(500, 568, 'platform_suelo');
     platforms.create(1000, 568, 'platform_suelo');
     platforms.create(1500, 568, 'platform_suelo');
@@ -100,12 +94,15 @@ function create ()
     platforms.create(3500, 568, 'platform_suelo');
     platforms.create(4000, 568, 'platform_suelo');
     platforms.create(4600, 568, 'platform_suelo');
-   // platforms.create(600, 400, 'platform_desierto_2');
+    //platforms.create(600, 400, 'platform_desierto_2');
     platforms.create(50, 250, 'platform_desierto_1');
     platforms.create(750, 220, 'platform_desierto_1');
-    checkpoint_final.create(400, 300, 'star');
+    checkpoint_final.create(4200, 430, 'star');
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
+    //scoreText = this.add.text(16, 16, ' 1/4 fragmentos', { fontSize: '32px', fill: '#000' });
+    //convText = this.add.text(800, 16, ' Dialogos', { fontSize: '20px', fill: '#000' });
+    text = this.add.text(220, 240).setScrollFactor(0).setFontSize(16).setColor('#ffffff');
     cursors = this.input.keyboard.createCursorKeys();
     this.anims.create({
         key: 'left',
@@ -127,6 +124,7 @@ function create ()
         repeat: -1
     });
     this.physics.add.collider(player, platforms);
+    this.physics.add.collider(personas, platforms);
     this.physics.add.collider(checkpoint_final, platforms);
     this.physics.add.overlap(player, checkpoint_final, FinalEvent, null, this);
     this.physics.add.overlap(player, personas, PersonaEvent, null, this);
@@ -134,7 +132,12 @@ function create ()
 }
 
 function update ()
-{    
+{   if (gameOver)//si se acaba el juego
+    {   
+        player.setVelocityX(0);
+        return; //TODO: HAY QUE AGREGAR AQUI QUE SI PIERDE SE PONGA EL MAPA ROJO O ALGO ASI, O REGRESE AL MENU
+    }
+ 
     var cam = this.cameras.main;
     if (cam.deadzone)
     {
@@ -192,15 +195,23 @@ function update ()
 }
 
     function PersonaEvent (player, persona)
-    {
-        personas.disableBody(true, true); //aqui lo que tiene que ir es que se muestren las conversaciones 
+    {   
+        countPersonas+=1;
+        if(countPersonas==1){ //esto hace que si se encuentra con la primera persona le de un consejo 1
+            convText="Consejo 1";
+        }
+        if(countPersonas==2){//esto hace que si se encuentra con la primera persona le de un consejo 2
+            convText="Consejo 2";
+        }
+        //personas.disableBody(true, true); //aqui lo que tiene que ir es que se muestren las conversaciones 
         score += 1;   
-        scoreText.setText(score+ "/4 fragmentos");
+        scoreText=score+ "/4 fragmentos";
     }
 
     function FinalEvent (player, checkpoint_final)
-    {
+    {   
         if(score!=4){ //si no ha recogido cuatro fragmentos y llega al final gameover
-            gameover=true
+            console.log("entra en el evento final")
+            gameOver=true
         }
     }
